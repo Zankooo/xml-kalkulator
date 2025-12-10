@@ -227,16 +227,12 @@ button {
     border: none;
     border-radius: 999px;
     cursor: pointer;
-    transition:
-        background-color 0.15s ease,
-        box-shadow 0.15s ease,
-        transform 0.08s ease;
-    box-shadow: 0 8px 18px rgba(15, 104, 255, 0.35);
+    
+    
 }
 
 button:hover {
     background-color: #0b5ada;
-    box-shadow: 0 10px 20px rgba(15, 90, 218, 0.4);
     
 }
 

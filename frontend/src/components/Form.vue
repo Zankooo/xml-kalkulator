@@ -270,7 +270,7 @@ onBeforeUnmount(() => {
         <form id="uploadForm" method="POST" action="/process" enctype="multipart/form-data">
             <div>
                 <h1>Nalaganje XML poročil</h1>
-                <p>Izberite več XML datotek za izračun skupne vsote <strong>TotalFeeCalc</strong>.</p>
+                <p>Izberite več XML datotek za izračun skupne vsote <strong>TotalFeeCalc</strong> za iste BIC banke.</p>
             </div>
             <div id="dropzone" class="dropzone">
                 <div class="dropzone-inner">

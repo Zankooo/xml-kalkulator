@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 
 // privzeto aktivna prva sekcija
-const active = ref('#o-meni')
+const active = ref('#/')
 
 function setActive(hash) {
   active.value = hash
@@ -12,18 +12,21 @@ function setActive(hash) {
 <template>
   <header class="navbar">
     <div class="left">
-      <img
-        src="../assets/sparkasse-logo.png"
-        alt="Logo"
-        style="height:60px; width:auto; object-fit:contain; display:block;"
-      />
+      <a href="#/" @click="setActive('#/')">
+        <img
+          src="../assets/sparkasse-logo.png"
+          alt="Logo"
+          class="logo-click"
+          style="height:60px; width:auto; object-fit:contain; display:block; cursor: pointer;"
+        />
+      </a>
     </div>
 
     <nav class="right">
       <a
-        href="#o-meni"
-        :class="active === '#o-meni' ? 'nav-link nav-btn-active' : 'nav-link nav-btn'"
-        @click="setActive('#o-meni')"
+        href="#/"
+        :class="active === '#/' ? 'nav-link nav-btn-active' : 'nav-link nav-btn'"
+        @click="setActive('#/')"
       >
         Prva stran
       </a>
@@ -98,7 +101,7 @@ function setActive(hash) {
 }
 
 /* hover na navadnem gumbu */
-.nav-btn:hover {
+.nav-btn:hover nav {
   border-color: #f3f5f7;
 }
 
@@ -108,4 +111,6 @@ function setActive(hash) {
   color: black;
   
 }
+
+
 </style>
