@@ -1,54 +1,49 @@
 <script setup>
-import { ref } from 'vue'
-
-// privzeto aktivna prva sekcija
-const active = ref('#/')
-
-function setActive(hash) {
-  active.value = hash
-}
+/* Ni ti treba nič uvažat – RouterLink in $route sta v templatu že na voljo,
+   če imaš v main.js: app.use(router) */
 </script>
 
 <template>
   <header class="navbar">
     <div class="left">
-      <a href="#/" @click="setActive('#/')">
+      <!-- Logo vodi na "/" -->
+      <RouterLink to="/">
         <img
           src="../assets/sparkasse-logo.png"
           alt="Logo"
           class="logo-click"
           style="height:60px; width:auto; object-fit:contain; display:block; cursor: pointer;"
         />
-      </a>
+      </RouterLink>
     </div>
 
+    <!-- NAVBAR -->
     <nav class="right">
-      <a
-        href="#/"
-        :class="active === '#/' ? 'nav-link nav-btn-active' : 'nav-link nav-btn'"
-        @click="setActive('#/')"
+      <!-- PRVA STRAN – route "/" -->
+      <RouterLink
+        to="/"
+        :class="['nav-link', $route.path === '/' && !$route.hash ? 'nav-btn-active' : 'nav-btn']"
       >
         Prva stran
-      </a>
+      </RouterLink>
 
-      <a
-        href="#delovanje"
-        :class="active === '#delovanje' ? 'nav-link nav-btn-active' : 'nav-link nav-btn'"
-        @click="setActive('#delovanje')"
+      <!-- DELOVANJE APLIKACIJE – sekcija na Home strani (hash na isti strani) -->
+      <RouterLink
+        :to="{ path: '/delovanje'}"
+        :class="['nav-link', $route.path === '/delovanje' ? 'nav-btn-active' : 'nav-btn'
+        ]"
       >
-        Delovanje aplikacije
-      </a>
+        Namen in Delovanje 
+      </RouterLink>
 
-      <a
-        href="#avtor"
-        :class="active === '#avtor' ? 'nav-link nav-btn-active' : 'nav-link nav-btn'"
-        @click="setActive('#avtor')"
+      <!-- O AVTORJU – route "/about" -->
+      <RouterLink
+        to="/about"
+        :class="['nav-link', $route.path === '/about' ? 'nav-btn-active' : 'nav-btn']"
       >
         O avtorju
-      </a>
+      </RouterLink>
     </nav>
-
-
   </header>
 </template>
 
@@ -68,14 +63,12 @@ function setActive(hash) {
   z-index: 50;
 }
 
-/* LEFT – logo */
 .left {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-/* RIGHT – menu */
 .right {
   display: flex;
   align-items: center;
@@ -101,7 +94,7 @@ function setActive(hash) {
 }
 
 /* hover na navadnem gumbu */
-.nav-btn:hover nav {
+.nav-btn:hover {
   border-color: #f3f5f7;
 }
 
@@ -109,8 +102,5 @@ function setActive(hash) {
 .nav-btn-active {
   background: #f3f5f7;
   color: black;
-  
 }
-
-
 </style>

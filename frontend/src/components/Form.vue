@@ -263,18 +263,17 @@ onBeforeUnmount(() => {
 </script>
 
 
-
-
 <template>
     <div class="form-page" id="prva">
         <form id="uploadForm" method="POST" action="/process" enctype="multipart/form-data">
             <div>
-                <h1>Nalaganje XML poročil</h1>
+                <h1>Naloži XML poročila</h1>
                 <p>Izberite več XML datotek za izračun skupne vsote <strong>TotalFeeCalc</strong> za iste BIC banke.</p>
             </div>
             <div id="dropzone" class="dropzone">
                 <div class="dropzone-inner">
-                    <div class="dropzone-icon">📂</div>
+                    <div class="dropzone-icon"
+                    style="font-size: 37px; line-height: 1.2;">📥</div>
                     <div class="dropzone-text-main">Povlecite XML datoteke sem</div>
                     <div class="dropzone-text-sub">ali kliknite za izbiro iz računalnika</div>
                     <div class="dropzone-hint">Podprte so samo .xml datoteke</div>
