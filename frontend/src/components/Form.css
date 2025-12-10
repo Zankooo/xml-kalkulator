@@ -219,7 +219,7 @@ input[type="file"] {
 button {
     margin-top: 18px;
     width: 100%;
-    background: #0f68ff;
+    background: #1E73FF;
     color: #ffffff;
     padding: 10px 18px;
     font-size: 14px;
@@ -237,13 +237,15 @@ button {
 button:hover {
     background-color: #0b5ada;
     box-shadow: 0 10px 20px rgba(15, 90, 218, 0.4);
-    transform: translateY(-1px);
+    
 }
 
 button:active {
     transform: translateY(0);
     box-shadow: 0 5px 12px rgba(15, 90, 218, 0.35);
 }
+
+
 
 .button-disabled {
     opacity: 0.65;

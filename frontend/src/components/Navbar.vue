@@ -1,34 +1,57 @@
 <script setup>
+import { ref } from 'vue'
 
+// privzeto aktivna prva sekcija
+const active = ref('#o-meni')
 
+function setActive(hash) {
+  active.value = hash
+}
 </script>
 
 <template>
   <header class="navbar">
-
-
-
     <div class="left">
-      <img src="../assets/sparkasse-logo.png"
-     alt="Logo"
-     style="height:60px; width:auto; object-fit:contain; display:block;" />
-
+      <img
+        src="../assets/sparkasse-logo.png"
+        alt="Logo"
+        style="height:60px; width:auto; object-fit:contain; display:block;"
+      />
     </div>
 
     <nav class="right">
-      <a href="#o-meni">Prva stran</a>
-      <a href="#delovanje">Delovanje aplikacije</a>
-      <a href="#avtor">O avtorju</a>
-      
+      <a
+        href="#o-meni"
+        :class="active === '#o-meni' ? 'nav-link nav-btn-active' : 'nav-link nav-btn'"
+        @click="setActive('#o-meni')"
+      >
+        Prva stran
+      </a>
 
+      <a
+        href="#delovanje"
+        :class="active === '#delovanje' ? 'nav-link nav-btn-active' : 'nav-link nav-btn'"
+        @click="setActive('#delovanje')"
+      >
+        Delovanje aplikacije
+      </a>
+
+      <a
+        href="#avtor"
+        :class="active === '#avtor' ? 'nav-link nav-btn-active' : 'nav-link nav-btn'"
+        @click="setActive('#avtor')"
+      >
+        O avtorju
+      </a>
     </nav>
+
+
   </header>
 </template>
 
 <style scoped>
 .navbar {
-  
-  letter-spacing: 0.12em; /* približno tracking +3 */
+  letter-spacing: 0.12em;
   width: 100%;
   height: 85px;
   display: flex;
@@ -42,54 +65,47 @@
   z-index: 50;
 }
 
-/* LEFT – logo + name */
+/* LEFT – logo */
 .left {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.logo {
-  width: 55px;
-  height: 55px;
-  border-radius: 15px;
-}
-
-.name {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
 /* RIGHT – menu */
 .right {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
   font-size: 15px;
   font-weight: 600;
   text-transform: uppercase;
 }
 
-.right a {
+/* osnovni stil link-gumba */
+.nav-link {
   text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: 0.2s ease;
+}
+
+/* “navaden” gumb */
+.nav-btn {
+  background: transparent;
   color: #000;
-  transition: 0.25s ease;
 }
 
-.right a:hover {
-  opacity: 0.55;
+/* hover na navadnem gumbu */
+.nav-btn:hover {
+  border-color: #f3f5f7;
 }
 
-/* LANG SWITCHER */
-.lang {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.lang .active {
-  color: #1a73e8;
-  font-weight: 700;
+/* AKTIVEN gumb */
+.nav-btn-active {
+  background: #f3f5f7;
+  color: black;
+  
 }
 </style>
