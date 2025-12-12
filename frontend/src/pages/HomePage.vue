@@ -8,5 +8,6 @@ import Navbar from '../components/Navbar.vue';
     <Navbar />
     <Form />
     
+    
   </section>
 </template>
