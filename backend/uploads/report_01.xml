@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Document xmlns="X003B_/G02R">
+  <Report>
+    <GrpHdr>
+      <DocId>TEST_01</DocId>
+      <CreDtTm>2025-12-15T20:58:17.455650</CreDtTm>
+      <DtTo>2025-01-01</DtTo>
+      <DtTo>2025-01-31</DtTo>
+      <RptRCpt>KSPKSI22XXXX</RptRCpt>
+    </GrpHdr>
+
+    <Summary>
+      <DbtNum>1009</DbtNum>
+      <DbtValue>29313.28</DbtValue>
+      <CrdtNum>0</CrdtNum>
+      <CrdtValue>0.00</CrdtValue>
+    </Summary>
+
+    <Details>
+      
+      <Bank>
+        <BIC>HDELSI22XXXX</BIC>
+        <TotalFeeCalc>33.38</TotalFeeCalc>
+        
+        <P2M>
+          <DbtNum>182</DbtNum>
+          <DbtValue>9913.18</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>24.34</FeeCalc>
+        </P2M>
+
+        <P2M>
+          <DbtNum>340</DbtNum>
+          <DbtValue>4498.31</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>9.04</FeeCalc>
+        </P2M>
+
+      </Bank>
+
+      <Bank>
+        <BIC>KBMASI22XXXX</BIC>
+        <TotalFeeCalc>14.68</TotalFeeCalc>
+        
+        <P2M>
+          <DbtNum>93</DbtNum>
+          <DbtValue>3146.04</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>6.24</FeeCalc>
+        </P2M>
+
+        <P2M>
+          <DbtNum>224</DbtNum>
+          <DbtValue>4440.46</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>8.44</FeeCalc>
+        </P2M>
+
+      </Bank>
+
+      <Bank>
+        <BIC>NLBASI22XXXX</BIC>
+        <TotalFeeCalc>39.36</TotalFeeCalc>
+        
+        <P2M>
+          <DbtNum>364</DbtNum>
+          <DbtValue>7400.69</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>17.05</FeeCalc>
+        </P2M>
+
+        <P2M>
+          <DbtNum>84</DbtNum>
+          <DbtValue>8016.24</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>22.31</FeeCalc>
+        </P2M>
+
+      </Bank>
+
+      <Bank>
+        <BIC>ABANSI22XXXX</BIC>
+        <TotalFeeCalc>25.44</TotalFeeCalc>
+        
+        <P2M>
+          <DbtNum>55</DbtNum>
+          <DbtValue>8169.38</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>22.75</FeeCalc>
+        </P2M>
+
+        <P2M>
+          <DbtNum>24</DbtNum>
+          <DbtValue>1186.12</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>2.69</FeeCalc>
+        </P2M>
+
+      </Bank>
+
+    </Details>
+  </Report>
+</Document>

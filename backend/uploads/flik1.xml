@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Document xmlns="X003B_/G02R">
+  <Report>
+
+
+    <GrpHdr>
+      <DocId>KSPKSI22XXXX_FLIK_2025_01</DocId>
+      <CreDtTm>2025-02-02T07:47:39</CreDtTm>
+      <DtTo>2025-01-01</DtTo>
+      <DtTo>2025-01-31</DtTo>
+      <RptRCpt>KSPKSI22XXXX</RptRCpt>
+    </GrpHdr>
+
+
+    <Summary>
+      <DbtNum>815</DbtNum>
+      <DbtValue>35103.75</DbtValue>
+      <CrdtNum>0</CrdtNum>
+      <CrdtValue>0.00</CrdtValue>
+    </Summary>
+
+
+
+    <Details>
+
+      <Bank>
+        <BIC>HDELSI22XXXX</BIC>
+        <TotalFeeCalc>5.62</TotalFeeCalc>
+        <P2M>
+          <DbtNum>4</DbtNum>
+          <DbtValue>216.80</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>0.43</FeeCalc>
+        </P2M>
+        <P2M>
+          <DbtNum>51</DbtNum>
+          <DbtValue>2594.73</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>5.19</FeeCalc>
+        </P2M>
+      </Bank>
+
+      <Bank>
+        <BIC>KBMASI22XXXX</BIC>
+        <TotalFeeCalc>18.86</TotalFeeCalc>
+        <P2M>
+          <DbtNum>4</DbtNum>
+          <DbtValue>771.6</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>1.56</FeeCalc>
+        </P2M>
+        <P2M>
+          <DbtNum>333</DbtNum>
+          <DbtValue>8659.50</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>17.30</FeeCalc>
+        </P2M>
+      </Bank>
+
+
+      <Bank>
+        <BIC>NLBASI22XXXX</BIC>
+        <TotalFeeCalc>45.73</TotalFeeCalc>
+        <P2M>
+          <DbtNum>17</DbtNum>
+          <DbtValue>453.30</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>2.32</FeeCalc>
+        </P2M>
+        <P2M>
+          <DbtNum>377</DbtNum>
+          <DbtValue>21679.21</DbtValue>
+          <CrdtNum>0</CrdtNum>
+          <CrdtValue>0.00</CrdtValue>
+          <FeeCalc>43.36</FeeCalc>
+        </P2M>
+      </Bank>
+
+
+    </Details>
+
+  </Report>
+
+
+</Document>
