@@ -1,96 +1,138 @@
-// Uvoz Routerja iz Expressa (za definiranje endpointov)
+// Uvoz Routerja iz Expressa – omogoča definiranje endpointov (npr. POST /)
 import { Router } from "express";
-// Multer je middleware za obdelavo multipart/form-data (file upload)
-import multer from "multer";
-// path uporabljamo za pravilno sestavljanje poti (OS-agnostic)
-import path from "path";
-// fs omogoča delo z datotečnim sistemom (ustvarjanje map, brisanje, ipd.)
+
+// fs – za branje XML datotek iz diska
 import fs from "fs";
+
+// XMLParser iz fast-xml-parser – za pretvorbo XML → JavaScript objekt
+import { XMLParser } from "fast-xml-parser";
+
+// Multer upload middleware – skrbi za sprejem in shranjevanje datotek
+import upload from "../middleware/upload.js";
+
 // Ustvarimo nov router (npr. /api/izracuni)
 const router = Router();
-// Absolutna pot do mape, kamor bomo shranjevali XML datoteke
-const uploadDir = path.resolve("uploads");
 
-// Če mapa uploads/xml še ne obstaja, jo ustvarimo
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+/*
+  Inicializacija XML parserja.
+  - ignoreAttributes: ignorira XML atribute (teh ne rabiš)
+  - removeNSPrefix: odstrani namespace prefix (npr. X003B_/G02R),
+    da dostopaš do Document.Report... brez komplikacij
+*/
+const parser = new XMLParser({
+  ignoreAttributes: true,
+  removeNSPrefix: true,
+});
+
+/*
+  Helper funkcija:
+  XML parser včasih vrne objekt, včasih array (če je samo en element).
+  Ta funkcija poskrbi, da vedno delamo z array-jem.
+*/
+function asArray(x) {
+  if (!x) return [];
+  return Array.isArray(x) ? x : [x];
 }
 
+/*
+  Helper funkcija:
+  Pretvori vrednost v število.
+  Če pretvorba ni možna → vrne 0.
+*/
+function toNumber(x) {
+  const n = Number(String(x).trim());
+  return Number.isFinite(n) ? n : 0;
+}
 
-// Multer je “sprejemnik pošte” za datoteke, ki jih frontend pošlje
-// Konfiguracija shranjevanja za multer
-// Express ne zna brati datotek.
-// Request pride na server 
-// Multer ga prestreže 
-// Multer se vpraša:
-// - vkam naj shranim datoteko?
-// - kako naj jo poimenujem?
-// - ali jo sploh smem sprejeti?
+/*
+  POST endpoint:
+  - upload.array("xml_files") poskrbi, da multer:
+    - sprejme več XML datotek
+    - jih shrani na disk
+    - napolni request.files
+*/
+router.post("/", upload.array("xml_files"), async (request, response) => {
 
-// tukaj sedaj kam shranimo file
-const storage = multer.diskStorage({
-  // destination določa mapo, kamor se datoteka shrani
-  destination: (req, file, cb) => {
-    // v upload dir torej uploads
-    cb(null, uploadDir); // null = brez napake, uploadDir = ciljna mapa
-  },
-
-  // filename določa ime datoteke na disku
-  filename: (req, file, cb) => {
-    
-// ime datoteke obrdzimo isto kot je uporabnik 
-// uploadal na frontendu
-    const uniqueName = `${file.originalname}`;
-    cb(null, uniqueName);
-  }
-});
-
-// Ustvarimo multer middleware z nastavitvami
-// uporabimo zgoraj definirano diskStorage konfiguracijo
-const upload = multer({
-    storage, 
-    limits: { fileSize: 10 * 1024 * 1024 },
-  // filter dovoljuje samo XML datoteke
-    fileFilter: (req, file, cb) => {
-    // preverimo končnico datoteke
-    if (!file.originalname.endsWith(".xml")) {
-      // če ni XML → zavrnemo
-      return cb(new Error("Dovoljene so samo XML datoteke"));
-    }
-    // sicer dovolimo upload
-    cb(null, true);
-  }
-});
-
-// POST endpoint na /api/izracuni
-// multer middleware:
-  // pričakuje več datotek z imenom fielda "xml_files"
-router.post("/", upload.array("xml_files"), function (request, response) {
-
-    if (!request.files || request.files.length === 0) {
-        return response.status(400).json({
-            ok: false,
-            error: "Ni poslanih XML datotek"
-        });
-    }
-
-    // klele je treba napisat zdj logiko za izračun xml
-    const savedFiles = request.files.map(file => ({
-        originalName: file.originalname,
-        savedAs: file.filename,
-        path: file.path,
-        size: file.size
-    }));
-
-    response.json({
-        ok: true,
-        message: "XML datoteke uspešno prejete",
-        count: request.files.length,
-        files: savedFiles
+  // Če ni nobene datoteke, vrnemo napako, filter pač
+  if (!request.files || request.files.length === 0) {
+    return response.status(400).json({
+      ok: false,
+      error: "Ni poslanih XML datotek"
     });
+  }
+
+  /*
+    Objekt za seštevanje TotalFeeCalc po BIC-u.
+    Primer:
+    {
+      HDELSI22XXXX: 123.45,
+      KBMASI22XXXX: 98.32
+    }
+  */
+  const totalsByBic = {};
+
+  try {
+    // Gremo čez VSE naložene XML datoteke
+    for (const file of request.files) {
+
+      // Preberemo XML datoteko iz diska kot string
+      const xmlString = fs.readFileSync(file.path, "utf-8");
+
+      // Parsamo XML → JavaScript objekt
+      const data = parser.parse(xmlString);
+
+      /*
+        Dostop do <Bank> elementov.
+        Struktura glede na tvoj XML:
+        Document → Report → Details → Bank
+      */
+      const banks = asArray(
+        data?.Document?.Report?.Details?.Bank
+      );
+
+      // Gremo čez vse banke v tem XML-ju
+      for (const bank of banks) {
+
+        // Preberemo BIC banke
+        const bic = String(bank?.BIC || "").trim();
+        if (!bic) continue; // če BIC manjka, preskočimo
+
+        // Preberemo TotalFeeCalc in ga pretvorimo v number
+        const fee = toNumber(bank?.TotalFeeCalc);
+
+        // Seštevanje po BIC ključu
+        totalsByBic[bic] = (totalsByBic[bic] || 0) + fee;
+      }
+    }
+
+    /*
+      (Opcijsko)
+      Zaokrožimo vse vrednosti na 2 decimalni mesti,
+      da dobimo lep finančni izpis.
+    */
+    for (const bic of Object.keys(totalsByBic)) {
+      totalsByBic[bic] =
+        Math.round(totalsByBic[bic] * 100) / 100;
+    }
+
+    // Uspešen odgovor klientu
+    return response.json({
+      ok: true,
+      message: "Izračun uspešen",
+      filesProcessed: request.files.length,
+      totalsByBic
+    });
+
+  } catch (err) {
+    // Če pride do napake pri branju, parsiranju ali izračunu
+    console.error(err);
+
+    return response.status(500).json({
+      ok: false,
+      error: "Napaka pri parsiranju XML ali izračunu"
+    });
+  }
 });
 
-
-
-// Router izvozimo kot default export
+// Router izvozimo za uporabo v server.js
 export default router;
